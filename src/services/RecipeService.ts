@@ -1,10 +1,11 @@
-import axios from "axios"
+
+import api from "../lib/axios"
 import { CategoriesAPIResponseSchema, DrinksAPIResponse, RecipeAPIResponseSchema } from "../schemas/recipes-schema"
 import { Drink, Drinks, SearchFilter } from "../types"
 
 export async function getCategories() {
-    const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list'
-    const {data} = await axios(url)
+    const url = '/list.php?c=list'
+    const {data} = await api(url)
     const result = CategoriesAPIResponseSchema.safeParse(data)
     if(result.success) {
         return result.data
@@ -13,8 +14,8 @@ export async function getCategories() {
 
 //si la API permitiera utilizar multiples parametros en la peticion:
 // export async function getRecipes(filters: SearchFilter) {
-//     const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${filters.category}&i=${filters.ingredient}`
-//     const { data } = await axios(url)
+//     const url = `/filter.php?c=${filters.category}&i=${filters.ingredient}`
+//     const { data } = await api(url)
 //     const result = DrinksAPIResponse.safeParse(data)
 //     if(result.success) {
 //         return result.data
@@ -22,8 +23,8 @@ export async function getCategories() {
 // }
 
 export async function getRecipes(filters: SearchFilter) {
-    const urlCategory = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${filters.category}`
-    const { data } = await axios(urlCategory)
+    const urlCategory = `/filter.php?c=${filters.category}`
+    const { data } = await api(urlCategory)
     const categoryResult = DrinksAPIResponse.safeParse(data)
 
     if (!categoryResult.success) {
@@ -31,8 +32,8 @@ export async function getRecipes(filters: SearchFilter) {
     }
     const filterByCategory = categoryResult.data.drinks
 
-    const urlIngredient = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${filters.ingredient}`
-    const { data: ingredientsData } = await axios(urlIngredient)
+    const urlIngredient = `/filter.php?i=${filters.ingredient}`
+    const { data: ingredientsData } = await api(urlIngredient)
     const ingredientsResult = DrinksAPIResponse.safeParse(ingredientsData)
 
     if (!ingredientsResult.success) {
@@ -54,8 +55,8 @@ export async function getRecipes(filters: SearchFilter) {
 }
 
 export async function getRecipeById(id: Drink['idDrink']) {
-    const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
-    const { data } = await axios(url)
+    const url = `/lookup.php?i=${id}`
+    const { data } = await api(url)
     const result = RecipeAPIResponseSchema.safeParse(data.drinks[0])
     if(result.success) {
         return result.data
