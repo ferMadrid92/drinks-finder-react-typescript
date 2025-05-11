@@ -25,7 +25,7 @@ export default function GenerateAI() {
   
     return (
       <>
-        <h1 className="text-6xl font-extrabold">Generar Receta con IA</h1>
+        <h1 className="text-6xl font-extrabold">Generate recipe with AI</h1>
   
         <div className="max-w-4xl mx-auto">
           <form  
@@ -37,11 +37,13 @@ export default function GenerateAI() {
                 name="prompt" 
                 id="prompt" 
                 className="border bg-white p-4 rounded-lg w-full border-slate-800" 
-                placeholder="Genera una receta con ingredientes. Ej. Bebida con Tequila y Fresa"
+                placeholder="Show me a recipe with ingredients: e.g. Tequila and Strawberry"
+                type="text"
+                autoComplete="off"
               />
               <button 
                 type="submit" 
-                aria-label="Enviar"
+                aria-label="Generate"
                 className={`cursor-pointer absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 ${isGenerating ? 'cursor-not-allowed opacity-50' : ''}`}
                 disabled={isGenerating}
               >
