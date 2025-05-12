@@ -15,7 +15,7 @@ export default function GenerateAI() {
 
         if(prompt.trim() === '') {
           showNotification({
-            text: 'La busqueda no puede estar vacía',
+            text: 'The search cannot be empty',
             error: true
           })
           return
